@@ -1,4 +1,4 @@
-# TensorViewforMatlab
+# TensorView for Matlab
 TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files for molecular visualization. Any 3D tensor can be used for visualisation though the chemical shift/shielding tensor is used as an input in script.  
    
    TensorView for Matlab is licenced with creative commons CC BY. https://creativecommons.org/licenses/
