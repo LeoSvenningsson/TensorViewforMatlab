@@ -16,7 +16,7 @@ onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@chalmers.se), 
-Dr. André Ludwig,
+Dr. André Ludwig (aludwig@alumni.ethz.ch),
 Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
    TensorView for Matlab is a collaboration with works derrived from molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d) and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793 and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
