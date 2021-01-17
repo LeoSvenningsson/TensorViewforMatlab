@@ -34,3 +34,5 @@ Updated contact information
 Fixed bug with color slider
 
 Tensoview now simplifies symmetric tensors in the Unique-z PAS form. Example: [2 2 1]. 
+
+Recompiled for MacOS "Big Sur"
