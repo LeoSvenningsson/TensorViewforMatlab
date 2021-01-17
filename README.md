@@ -26,7 +26,11 @@ Versions for windows and mac reside in their respective folder which only requir
 
 ### Changelog
 Fixed bug with some forms of atom labels. 
+
 Added atomic number read for .xyz
+
 Updated contact information
+
 Fixed bug with color slider
+
 Tensoview now simplifies symmetric tensors in the Unique-z PAS form. Example: [2 2 1]. 
