@@ -210,21 +210,21 @@ end
 % element specific CPK colors
 function c = col(s)
 switch s
-    case  'H', c = [1 1 1];
-    case  'C', c = [0.6 0.6 0.6];
-    case  'O', c = [1.0 0.1 0.1];
-    case  'N', c = [0.1 0.1 0.9];
-    case  'I', c = [0.4 0.1 0.7];
-    case  {'F','Cl'}, c = [0.2 0.9 0.2];
-    case  'Br', c = [0.6 0.1 0.1];
-    case  {'He','Ne','Ar','Kr','Xe'}, c = [0.2 1.0 1.0];
-    case  'P', c = [1.0 0.6 0.2];
-    case  'S', c = [0.9 0.9 0.2];
-    case  'B', c = [1.0 0.7 0.5];
-    case  {'Li','Na','K','Rb','Cs','Fr'}, c = [0.5 0.1 1.0];
-    case  {'Be','Mg','Ca','Sr','Ba','Ra'}, c = [0.1 0.5 0.1];
-    case  'Ti', c = [0.6 0.6 0.6];
-    case  'Fe', c = [0.9 0.5 0.1];
+    case  {'H','1'}, c = [1 1 1];
+    case  {'C','6'}, c = [0.6 0.6 0.6];
+    case  {'O','8'}, c = [1.0 0.1 0.1];
+    case  {'N','7'}, c = [0.1 0.1 0.9];
+    case  {'I','53'}, c = [0.4 0.1 0.7];
+    case  {'F','9','Cl','17'}, c = [0.2 0.9 0.2];
+    case  {'Br','35'}, c = [0.6 0.1 0.1];
+    case  {'He','2','Ne','10','Ar','18','Kr','36','Xe','54'}, c = [0.2 1.0 1.0];
+    case  {'P','15'}, c = [1.0 0.6 0.2];
+    case  {'S','16'}, c = [0.9 0.9 0.2];
+    case  {'B','5'}, c = [1.0 0.7 0.5];
+    case  {'Li','3','Na','11','K','19','Rb','37','Cs','55','Fr','87'}, c = [0.5 0.1 1.0];
+    case  {'Be','4','Mg','12','Ca','20','Sr','38','Ba','56','Ra','88'}, c = [0.1 0.5 0.1];
+    case  {'Ti','81'}, c = [0.6 0.6 0.6];
+    case  {'Fe','26'}, c = [0.9 0.5 0.1];
     otherwise, c = [0.9 0.5 1.0];
 end
 
@@ -232,10 +232,10 @@ end
 % element specific radii
 function r = rad(s)
 switch s
-    case  'H', r = 0.3;
-    case  'C', r = 0.4;
-    case  'O', r = 0.4;
-    case  'N', r = 0.4;
-    case  'I', r = 0.5;
+    case  {'H','1'}, r = 0.3;
+    case  {'C','6'}, r = 0.4;
+    case  {'O','8'}, r = 0.4;
+    case  {'N','7'}, r = 0.4;
+    case  {'I','53'}, r = 0.5;
     otherwise, r = 0.4;
 end

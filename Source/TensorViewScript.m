@@ -1,36 +1,37 @@
 %%
-%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a molecular context.
-%   TensorView for Matlab can read arbitrary .pdb and .xyz files for molecular visualization.
-%   The chemical shift/shielding tensor is used as an input in script, though any 3D
-%   tensor can be used for visualisation, such as the dipolar tensor.  
-%   
-%   TensorView for Matlab is licenced by creative commons CC BY. https://creativecommons.org/licenses/
-%   Free to share and adapt. Give appropriate credits to authors:
+%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a
+%   molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files
+%   for molecular visualization. Any 3D tensor can be used for visualisation though
+%   the chemical shift/shielding tensor is used as an input in script.
+%
+%   TensorView for Matlab is licenced with creative commons CC BY.
+%   https://creativecommons.org/licenses/ Free to share and adapt.
+%   Give appropriate credits to authors:
 %   github.com/LeoSvenningsson/TensorViewforMatlab
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.0
+%   Version: 1.11
 %
-%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se) 
-%            Dr. André Ludwig (mail@andreludwig.ch/aludwig@alumni.ethz.ch)
+%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
+%            Dr. André Ludwig (aludwig@alumni.ethz.ch)
 %            Prof. Leonard Mueller (leonard.mueller@ucr.edu)
-%   
+%
 %   TensorView for Matlab is a collaboration with works derrived from
-%   molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d) 
+%   molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d)
 %   and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793  and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
-%   
+%
 %%
 clear all
 %%% User input starts here
 FileName ='ALA-ALA-ALA_NMR.pdb'; % the molecular file in either .pdb or .xyz and connectionless .pdb format
 
 Tensor =  [-5.9766, -60.3020, -10.8928;
-		  -65.5206, -23.0881, -25.2372;
-		  -9.5073, -28.2399, 56.2779]; % The molecular frame tensor in the either non-symmetric or symmetric form. The script will transform to the symetrical version regardles of input.
+    -65.5206, -23.0881, -25.2372;
+    -9.5073, -28.2399, 56.2779]; % The molecular frame tensor in the either non-symmetric or symmetric form. The script will transform to the symetrical version regardles of input.
 
 %Tensor = RotateTensor(Alpha,Beta,Gamma,PAS,RotationMode); % RotateTensor(Alpha,Beta,Gamma,PAS,RotationMode) uncomment this line if you have the PAS CSA and the euler angles; 0 = ZYZactive; 1 = ZYZpassive; 2 = ZXZactive; 3 = ZXZpassive; PAS = [Sxx 0 0; 0 Syy 0; 0 0 Szz]
-     
+
 atomcoord = [-4.299848 -0.400088 -0.033384]; % Atom coordinate for the CSA tensor
 
 
@@ -38,7 +39,7 @@ CSAref = 0; % reference shift to go from "chemical shielding" to "chemical shift
 
 
 ShieldingShift = 0; % 0 for Shielding;  1 for Shift
-OvaloidEllipsoid = 0; % 0 for ovaloid;  1 for ellipsoid % Negative values of chemical shielding may give a missleading repressentation of the CSA. Please use the ovaloid model. 
+OvaloidEllipsoid = 0; % 0 for ovaloid;  1 for ellipsoid % Negative values of chemical shielding may give a missleading repressentation of the CSA. Please use the ovaloid model.
 
 TensorScale = 1; % Tensor scaling
 
@@ -54,10 +55,10 @@ Bondlimit = 1.6; % 1.6Å This is only used for the .xyz format and connectionles
 
 %%%% Add extra tensors
 NR = 0; % Number of extra tensors
-% T1 = [ 50.675  61.810 -29.154; 
-%            53.606 -50.064  30.894; 
+% T1 = [ 50.675  61.810 -29.154;
+%            53.606 -50.064  30.894;
 %           -39.382  60.395  4.832  ]; % Tensor naming convention T1, T2, T...
-% 
+%
 % A1 = [-4.745, 10.679, 6.273];% atomcoord naming convention A1, A2, A...
 % C = {T1;A1}; % cell structure {T1,T2,T3;A1,A2,A3}
 %%%%
@@ -93,23 +94,29 @@ if contains(FileName,".pdb") % reads .pdb files
         line = fgetl(fileid);
     end
     fclose(fileid);
-    labels=num2cell(Alist');
+    labels = cell(length(Alist(:,1)),1);
+    for q = 1:length(Alist(:,1))
+        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
+    end
     filetype = ".pdb";
 elseif contains(FileName,".xyz") % reads .xyz files
-        NrOfAtoms=str2double(line);
-        line = fgetl(fileid); % Skip a line
-    for i = 1:NrOfAtoms 
-            line = fgetl(fileid);
-            xyz(i,:) =  sscanf(line(10:48),'%f %f %f')';
-            Alist(i,:) =  sscanf(line(1),'%s');
+    NrOfAtoms=str2double(line);
+    line = fgetl(fileid); % Skip a line
+    for i = 1:NrOfAtoms
+        line = fgetl(fileid);
+        xyz(i,:) =  sscanf(line(10:48),'%f %f %f')';
+        Alist(i,:) =  sscanf(line(1:3),'%s');
     end
     fclose(fileid);
-    labels=num2cell(Alist');
+    labels = cell(length(Alist(:,1)),1);
+    for q = 1:length(Alist(:,1))
+        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
+    end
     filetype = ".xyz";
     Conlist = 0;
 else
     error('fileformat .pdb or .xyz was not found')
-end    
+end
 
 
 [X,Y,Z,AlphaMap]=CreateTensor(Tensor,atomcoord,CSAref,OvaloidEllipsoid,ShieldingShift,Transparency,TensorScale);
@@ -172,7 +179,7 @@ end
 %   ry =    [cos(rad), 0, sin(rad);
 %             0, 1, 0;
 %             -sin(rad), 0, cos(rad)];
-%     
+%
 %   rz =   [cos(rad), -sin(rad), 0;
 %             sin(rad), cos(rad), 0;
 %             0, 0, 1];

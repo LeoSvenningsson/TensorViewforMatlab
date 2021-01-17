@@ -1,8 +1,9 @@
 function [Euler,PASv] = MFtoEuler(Tensor,Mode,Order)
-Tensor=round(Tensor,5);
+%Tensor=round(Tensor,5);
 SymTensor = (Tensor+transpose(Tensor))/2; % symmetrizes the tensor
 [U, D] = eig(SymTensor, 'vector'); % Rotation matrix is gained from the Eigenvectors
 Sym1 = length(D)-length(unique(round(D,7)));
+
 if Order==1
     [D, ind] = sort(D,'ascend');
     U = U(:, ind);
@@ -11,7 +12,9 @@ if Order==2
     [D, ind] = sort(D,'descend');
     U = U(:, ind);
 end
-
+if Sym1 == 1 && round(U(3,3),4) == 0 %Sorting only for symetrical tensors
+    U = U(:, [1 3 2]);
+end
 %%%
 
 PAS(1,1)=D(1);
@@ -21,6 +24,8 @@ PASv=D;
 
 if Mode == 1
     %%% ZYZ Active Rotation system
+    
+    
     Beta1 = acos(U(3,3));
     
     if U(3,3) == 1
@@ -55,6 +60,27 @@ if Mode == 1
     end
     
     %%%
+    if Sym1 == 2 % Spherical symmetry
+        Alpha = 0;
+        Beta = 0;
+        Gamma = 0;
+    end
+    if Sym1 == 1
+        if round(D(3),4) == round(D(2),4)
+%             rz3 =   [cos(Gamma), -sin(Gamma), 0;
+%                 sin(Gamma), cos(Gamma), 0;
+%                 0, 0, 1];
+%             U
+%             U = U*transpose(rz3); % an reverse rotation that effectivly sets Gamma=0
+%             
+%             Alpha = atan2(U(2,3)/sin(Beta),U(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
+%             Beta = acos(U(3,3));
+%             Gamma = 0;
+        else
+            Gamma = 0;
+        end
+    end
+    
     
     Alpha = mod(Alpha,2*pi);
     Beta = mod(Beta,2*pi);
@@ -74,17 +100,12 @@ if Mode == 1
         Gamma =  pi - Gamma;
         Gamma = mod(Gamma,2*pi);
     end
-    if Gamma>pi
+    if Gamma>=pi
         Gamma = Gamma-pi;
     end
     
     %%%%
     
-    if Sym1 == 2
-        Alpha = 0;
-        Beta = 0;
-        Gamma = 0;
-    end
     
     AlphaZYZactive = Alpha;
     BetaZYZactive = Beta;
@@ -126,6 +147,46 @@ if Mode == 2
         Gamma = Gamma1;
     end
     
+    if Sym1 == 2 % Spherical symmetry
+        Alpha = 0;
+        Beta = 0;
+        Gamma = 0;
+    end
+    
+    if Sym1 == 1
+         if round(D(3),4) == round(D(2),4)
+%             rz3 =   [cos(Gamma), -sin(Gamma), 0; % Code not in use
+%                 sin(Gamma), cos(Gamma), 0;
+%                 0, 0, 1];
+%             U
+%             Usym = U*transpose(rz3); % an reverse rotation that effectivly sets Alpha=0
+%             
+%             Alpha = atan2(Usym(2,3)/sin(Beta),Usym(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
+%             Beta = acos(Usym(3,3));
+%             Gamma = 0;
+%             
+%             MF=Usym*PAS*Usym^(-1);
+%             
+%             if isequal(round(Tensor,3),round(MF,3))
+%             else
+%                 U = U(:, [1 3 2]);
+%                 U
+%                 Beta = acos(U(3,3));
+%                 Gamma = atan2(U(3,2)/sin(Beta),-U(3,1)/sin(Beta));
+%                 rz3 =   [cos(Gamma), -sin(Gamma), 0;
+%                         sin(Gamma), cos(Gamma), 0;
+%                         0, 0, 1];
+%                 Usym = U*transpose(rz3); % an reverse rotation that effectivly sets Alpha=0
+%                 
+%                 Alpha = atan2(Usym(2,3)/sin(Beta),Usym(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
+%                 Beta = acos(Usym(3,3));
+%                 Gamma = 0;
+%             end
+        else
+            Gamma = 0;
+        end
+    end
+    
     AlphaZYZpassive = mod(-Gamma,2*pi);
     BetaZYZpassive = mod(-Beta,2*pi);
     GammaZYZpassive = mod(-Alpha,2*pi);
@@ -143,14 +204,8 @@ if Mode == 2
         GammaZYZpassive = GammaZYZpassive + pi;
         GammaZYZpassive = mod(GammaZYZpassive,2*pi);
     end
-    if AlphaZYZpassive>pi
+    if AlphaZYZpassive>=pi
         AlphaZYZpassive = AlphaZYZpassive-pi;
-    end
-    
-    if Sym1 == 2 % setting angles for spherically symmetric tensors
-        AlphaZYZpassive = 0;
-        BetaZYZpassive = 0;
-        GammaZYZpassive = 0;
     end
     
     Euler = [AlphaZYZpassive,BetaZYZpassive,GammaZYZpassive];
@@ -212,7 +267,7 @@ if Mode == 3
         Gamma =  pi - Gamma;
         Gamma = mod(Gamma,2*pi);
     end
-    if Gamma>pi
+    if Gamma>=pi
         Gamma = Gamma-pi;
     end
     
@@ -222,6 +277,14 @@ if Mode == 3
         Gamma = 0;
     end
     
+    if Sym1 == 1
+        if round(D(3),4) == round(D(2),4)
+            
+            
+        else
+            Gamma = 0;
+        end
+    end
     
     AlphaZXZactive = Alpha;
     BetaZXZactive = Beta;
@@ -280,7 +343,7 @@ if Mode == 4
         GammaZXZpassive = GammaZXZpassive + pi;
         GammaZXZpassive = mod(GammaZXZpassive,2*pi);
     end
-    if AlphaZXZpassive>pi
+    if AlphaZXZpassive>=pi
         AlphaZXZpassive = AlphaZXZpassive-pi;
     end
     
@@ -288,6 +351,14 @@ if Mode == 4
         AlphaZXZpassive = 0;
         BetaZXZpassive = 0;
         GammaZXZpassive = 0;
+    end
+    if Sym1 == 1
+        if round(D(3),4) == round(D(2),4)
+            
+            
+        else
+            AlphaZXZpassive = 0;
+        end
     end
     
     Euler = [AlphaZXZpassive,BetaZXZpassive,GammaZXZpassive];

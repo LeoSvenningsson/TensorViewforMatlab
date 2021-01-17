@@ -1,20 +1,21 @@
 function TensorViewApp(Fname,s11,s21,s31,s12,s22,s32,s13,s23,s33,x,y,z,CSARef,Scale,Trans,R,G,B,shieldShift,OvEl,MolTen,Bond,MoreT)
 %
-%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a molecular context.
-%   TensorView for Matlab can read arbitrary .pdb and .xyz files for molecular visualization.
-%   The chemical shift/shielding tensor is used as an input in script, though any 3D
-%   tensor can be used for visualisation, such as the dipolar tensor.  
-%   
-%   TensorView for Matlab is licenced by creative commons CC BY. https://creativecommons.org/licenses/
-%   Free to share and adapt. Give appropriate credits to authors:
+%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a 
+%   molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files 
+%   for molecular visualization. Any 3D tensor can be used for visualisation though 
+%   the chemical shift/shielding tensor is used as an input in script.
+%
+%   TensorView for Matlab is licenced with creative commons CC BY. 
+%   https://creativecommons.org/licenses/ Free to share and adapt. 
+%   Give appropriate credits to authors: 
 %   github.com/LeoSvenningsson/TensorViewforMatlab
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.0
+%   Version: 1.11
 %
 %   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se) 
-%            Dr. André Ludwig (mail@andreludwig.ch/aludwig@alumni.ethz.ch)
+%            Dr. André Ludwig (aludwig@alumni.ethz.ch)
 %            Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 %   
 %   TensorView for Matlab is a collaboration with works derrived from
@@ -61,7 +62,7 @@ if fileid ~= -1
         while ischar(line)
             if(strncmp('HETATM',line,6) || strncmp('ATOM',line,4))
                 xyz(i,:) =  sscanf(line(31:54),'%f %f %f')';
-                Alist(i,:) =  sscanf(line(14),'%s');
+                Alist(i,:) =  sscanf(line(14:16),'%s');
                 i=i+1;
             end
             if(strncmp('CONECT',line,6))
@@ -71,7 +72,10 @@ if fileid ~= -1
             line = fgetl(fileid);
         end
         fclose(fileid);
-        labels=num2cell(Alist');
+        labels = cell(length(Alist(:,1)),1);
+        for q = 1:length(Alist(:,1))
+        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
+        end
         filetype = ".pdb";
     elseif contains(FileName,".xyz") % reads .xyz files
         NrOfAtoms=str2double(line);
@@ -79,10 +83,13 @@ if fileid ~= -1
         for i = 1:NrOfAtoms
             line = fgetl(fileid);
             xyz(i,:) =  sscanf(line(10:48),'%f %f %f')';
-            Alist(i,:) =  sscanf(line(1),'%s');
+            Alist(i,:) =  sscanf(line(1:3),'%c');
         end
         fclose(fileid);
-        labels=num2cell(Alist');
+        labels = cell(length(Alist(:,1)),1);
+        for q = 1:length(Alist(:,1))
+        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
+        end
         filetype = ".xyz";
         Conlist = 0;
     else
@@ -115,7 +122,7 @@ if PlotTensor==0 % plots the tensor with the molecule
     %camzoom(zoomFactor)
     light('Position',[-2 -2 -4]);
     ax = gca;
-    ax.Interactions = [rotateInteraction dataTipInteraction];
+    ax.Interactions = [rotateInteraction];
 elseif PlotTensor==1
     figure
     set(gcf,'Color','w')
@@ -125,7 +132,7 @@ elseif PlotTensor==1
     %camzoom(zoomFactor)
     light('Position',[-2 -2 -4]);
     ax = gca;
-    ax.Interactions = [rotateInteraction dataTipInteraction];
+    ax.Interactions = [rotateInteraction];
 elseif PlotTensor==2
     if MoreT == false
         figure
@@ -142,7 +149,7 @@ elseif PlotTensor==2
     camtarget('auto')
     %material shiny
     ax = gca;
-    ax.Interactions = [rotateInteraction dataTipInteraction];
+    ax.Interactions = [rotateInteraction];
     hold on
 else
     error("PlotTensor must be either 0 or 1 or 2")

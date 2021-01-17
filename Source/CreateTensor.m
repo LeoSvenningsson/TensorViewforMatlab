@@ -9,8 +9,7 @@ U = U(:, ind);
 
 CShiftA = CSAref - D; % Converting chemicals shielding to shift % The app is always in "shielding" mode
 
-%D = round(D,7);
-%U = round(U,7);
+
 Sym1 = length(D)-length(unique(round(D,7)));
 
 PAS(1,1)=D(1);
@@ -50,8 +49,8 @@ else
         Alpha1 = acos(U(1,1));
         Gamma1 = 0;
     else
-        Alpha1 = atan2(U(2,3)/sin(Beta1),U(1,3)/sin(Beta1));%atan(U(2,3)/U(1,3))
-        Gamma1 = atan2(U(3,2)/sin(Beta1),-U(3,1)/sin(Beta1));%atan(-U(3,2)/U(3,1))
+        Alpha1 = atan2(U(2,3)/sin(Beta1),U(1,3)/sin(Beta1));
+        Gamma1 = atan2(U(3,2)/sin(Beta1),-U(3,1)/sin(Beta1));
     end
     Alpha = Alpha1;
     Beta = Beta1;
