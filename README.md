@@ -12,7 +12,7 @@ mathworks.com/matlabcentral/fileexchange/55231-molecoule3d
 
 onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
-   Version: 1.0
+   Version: 1.11
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@chalmers.se), 
@@ -24,3 +24,9 @@ Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for the script version using matlab, which is why it is included separately.
 
+### Changelog
+Fixed bug with some forms of atom labels. 
+Added atomic number read for .xyz
+Updated contact information
+Fixed bug with color slider
+Tensoview now simplifies symmetric tensors in the Unique-z PAS form. Example: [2 2 1]. 
