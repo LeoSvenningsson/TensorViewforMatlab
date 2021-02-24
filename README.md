@@ -27,7 +27,7 @@ Versions for windows and mac reside in their respective folder which only requir
 ### Changelog 1.12
 
 Tensoview now simplifies symmetric tensors in the Unique-x PAS form. Example: [1 2 2]. 
-Unique-x ordering lack lotations within the tensor symmetry, therefore only this system is solved nummerically with a least square method.
+Unique-x ordering lack rotations within the tensor symmetry, therefore, only this system is solved nummerically with a least square method.
 
 A few variable name changes within the code.
 
