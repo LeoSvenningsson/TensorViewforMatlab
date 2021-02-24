@@ -1,5 +1,3 @@
-Updating files, will finish in 30 min
-
 # TensorView for Matlab
 TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files for molecular visualization. Any 3D tensor can be used for visualisation though the chemical shift/shielding tensor is used as an input in script.  
    
@@ -14,7 +12,7 @@ mathworks.com/matlabcentral/fileexchange/55231-molecoule3d
 
 onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
-   Version: 1.11
+   Version: 1.12
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@chalmers.se), 
@@ -26,7 +24,14 @@ Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for the script version using matlab, which is why it is included separately.
 
-### Changelog
+### Changelog 1.12
+
+Tensoview now simplifies symmetric tensors in the Unique-x PAS form. Example: [1 2 2]. 
+Unique-x ordering lack lotations within the tensor symmetry, therefore only this system is solved nummerically with a least square method.
+
+A few variable name changes within the code.
+
+### Changelog 1.11
 Fixed bug with some forms of atom labels. 
 
 Added atomic number read for .xyz
