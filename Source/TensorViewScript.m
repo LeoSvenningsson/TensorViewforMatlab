@@ -11,7 +11,7 @@
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.11
+%   Version: 1.12
 %
 %   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
@@ -39,7 +39,8 @@ CSAref = 0; % reference shift to go from "chemical shielding" to "chemical shift
 
 
 ShieldingShift = 0; % 0 for Shielding;  1 for Shift
-OvaloidEllipsoid = 0; % 0 for ovaloid;  1 for ellipsoid % Negative values of chemical shielding may give a missleading repressentation of the CSA. Please use the ovaloid model.
+OvaloidEllipsoid = "ovaloid"; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor % 
+
 
 TensorScale = 1; % Tensor scaling
 

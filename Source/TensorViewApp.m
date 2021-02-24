@@ -12,7 +12,7 @@ function TensorViewApp(Fname,s11,s21,s31,s12,s22,s32,s13,s23,s33,x,y,z,CSARef,Sc
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.11
+%   Version: 1.12
 %
 %   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se) 
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
@@ -35,7 +35,7 @@ CSAref = CSARef; % reference shift to go from "chemical shielding" to "chemical 
 
 
 ShieldingShift = shieldShift; % 0 for Shielding;  1 for Shift % The app is always in shielding mode
-OvaloidEllipsoid = OvEl; % 0 for ovaloid;  1 for elipsoid % Negative values of chemical shielding may give a missleading repressentation of the CSA. Please use the ovaloid model.
+OvaloidEllipsoid = OvEl; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor % 
 
 TensorScale = Scale; % Tensor scaling
 

@@ -10,7 +10,7 @@ U = U(:, ind);
 CShiftA = CSAref - D; % Converting chemicals shielding to shift % The app is always in "shielding" mode
 
 
-Sym1 = length(D)-length(unique(round(D,7)));
+Sym1 = length(D)-length(unique(round(D,7))); % checks for symetrical tensor properties
 
 PAS(1,1)=D(1);
 PAS(2,2)=D(2);
@@ -37,7 +37,7 @@ end
 Alpha = Alpha1;
 Beta = Beta1;
 Gamma = Gamma1;
-M=RotateTensor(Alpha,Beta,Gamma,PAS,0);
+M=RotateTensor(Alpha,Beta,Gamma,PAS,"AZYZ");
 MF=U*PAS*U^(-1);
 
 if isequal(round(M,3),round(MF,3)) % This check is to solve the cases when "eig" produces negative eigen vectors. If the eigen vectors have the wrong signa, the euler angles are incorrectly calculated
@@ -75,7 +75,7 @@ X = zeros(length(th),length(ph));
 Y = zeros(length(th),length(ph));
 Z = zeros(length(th),length(ph));
 
-if OvaloidEllipsoid == 0 % if ovaloid
+if OvaloidEllipsoid == "ovaloid" % if ovaloid
     AlphaMap = zeros(length(th),length(ph)) + Transparency; % make a map for transparency to lower transparency for negative CSA
     ORadi = zeros(length(th),length(ph));
     if ShieldingShift == 0 % if shielding
@@ -90,7 +90,7 @@ if OvaloidEllipsoid == 0 % if ovaloid
                 AlphaMap(CSAneg) = Transparency - 0.2; % 0.2 is the transparency shift for negative CSA
             end
         end
-    elseif ShieldingShift == 1 % if shift
+    elseif ShieldingShift == 1 % if shift, this part is only used when running the script version of TensorView for Matlab
         OTensorScale = TensorScale/sum(abs(CShiftA)/3);
         for i = 1:length(th)
             for j = 1:length(ph)
@@ -106,7 +106,7 @@ if OvaloidEllipsoid == 0 % if ovaloid
         error("ShieldingShift must be either 0 or 1")
     end
     
-elseif OvaloidEllipsoid == 1 % if ellipsoid
+elseif OvaloidEllipsoid == "ellipsoid" % if ellipsoid
     if ShieldingShift == 0 % if shielding
         ERadi = zeros(length(th),length(ph));
         ETensorScale = TensorScale/sum(abs(D)/3);
@@ -136,7 +136,7 @@ elseif OvaloidEllipsoid == 1 % if ellipsoid
         error("ShieldingShift must be either 0 or 1")
     end
 else
-    error("OvaloidEllipsoid must be either 0 or 1")
+    error("OvaloidEllipsoid input is not correct, use ovaloid or ellipsoid")
 end
 
 

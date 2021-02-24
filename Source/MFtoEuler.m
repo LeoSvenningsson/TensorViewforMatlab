@@ -1,14 +1,13 @@
 function [Euler,PASv] = MFtoEuler(Tensor,Mode,Order)
-%Tensor=round(Tensor,5);
 SymTensor = (Tensor+transpose(Tensor))/2; % symmetrizes the tensor
 [U, D] = eig(SymTensor, 'vector'); % Rotation matrix is gained from the Eigenvectors
 Sym1 = length(D)-length(unique(round(D,7)));
 
-if Order==1
+if Order=="Ascending"
     [D, ind] = sort(D,'ascend');
     U = U(:, ind);
 end
-if Order==2
+if Order=="Descending"
     [D, ind] = sort(D,'descend');
     U = U(:, ind);
 end
@@ -22,7 +21,7 @@ PAS(2,2)=D(2);
 PAS(3,3)=D(3);
 PASv=D;
 
-if Mode == 1
+if Mode == "AZYZ"
     %%% ZYZ Active Rotation system
     
     
@@ -39,7 +38,7 @@ if Mode == 1
     Alpha = Alpha1;
     Beta = Beta1;
     Gamma = Gamma1;
-    M=RotateTensor(Alpha,Beta,Gamma,PAS,0);
+    M=RotateTensor(Alpha,Beta,Gamma,PAS,"AZYZ");
     MF=U*PAS*U^(-1);
     
     if isequal(round(M,3),round(MF,3)) % This check is to solve the cases when "eig" produces negative eigen vectors. If the eigen vectors have the wrong signa, the euler angles are incorrectly calculated
@@ -67,15 +66,10 @@ if Mode == 1
     end
     if Sym1 == 1
         if round(D(3),4) == round(D(2),4)
-%             rz3 =   [cos(Gamma), -sin(Gamma), 0;
-%                 sin(Gamma), cos(Gamma), 0;
-%                 0, 0, 1];
-%             U
-%             U = U*transpose(rz3); % an reverse rotation that effectivly sets Gamma=0
-%             
-%             Alpha = atan2(U(2,3)/sin(Beta),U(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
-%             Beta = acos(U(3,3));
-%             Gamma = 0;
+            sqEul  =  sqminEuler(D,SymTensor,"ZYZ");
+            Alpha = sqEul(1);
+            Beta = sqEul(2);
+            Gamma = sqEul(3);
         else
             Gamma = 0;
         end
@@ -112,7 +106,7 @@ if Mode == 1
     GammaZYZactive = Gamma;
     Euler = [AlphaZYZactive,BetaZYZactive,GammaZYZactive];
 end
-if Mode == 2
+if Mode == "PZYZ"
     %%% ZYZ Passive Rotation system
     Beta1 = acos(U(3,3));
     
@@ -127,7 +121,7 @@ if Mode == 2
     Alpha = Alpha1;
     Beta = Beta1;
     Gamma = Gamma1;
-    M=RotateTensor(Alpha,Beta,Gamma,PAS,0);
+    M=RotateTensor(Alpha,Beta,Gamma,PAS,"AZYZ");
     MF=U*PAS*U^(-1);
     
     if isequal(round(M,3),round(MF,3)) % This check is to solve the cases when "eig" produces negative eigen vectors. If the eigen vectors have the wrong signa, the euler angles are incorrectly calculated
@@ -154,34 +148,11 @@ if Mode == 2
     end
     
     if Sym1 == 1
-         if round(D(3),4) == round(D(2),4)
-%             rz3 =   [cos(Gamma), -sin(Gamma), 0; % Code not in use
-%                 sin(Gamma), cos(Gamma), 0;
-%                 0, 0, 1];
-%             U
-%             Usym = U*transpose(rz3); % an reverse rotation that effectivly sets Alpha=0
-%             
-%             Alpha = atan2(Usym(2,3)/sin(Beta),Usym(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
-%             Beta = acos(Usym(3,3));
-%             Gamma = 0;
-%             
-%             MF=Usym*PAS*Usym^(-1);
-%             
-%             if isequal(round(Tensor,3),round(MF,3))
-%             else
-%                 U = U(:, [1 3 2]);
-%                 U
-%                 Beta = acos(U(3,3));
-%                 Gamma = atan2(U(3,2)/sin(Beta),-U(3,1)/sin(Beta));
-%                 rz3 =   [cos(Gamma), -sin(Gamma), 0;
-%                         sin(Gamma), cos(Gamma), 0;
-%                         0, 0, 1];
-%                 Usym = U*transpose(rz3); % an reverse rotation that effectivly sets Alpha=0
-%                 
-%                 Alpha = atan2(Usym(2,3)/sin(Beta),Usym(1,3)/sin(Beta)); % U now can be solved for Gamma = 0 solution
-%                 Beta = acos(Usym(3,3));
-%                 Gamma = 0;
-%             end
+        if round(D(3),4) == round(D(2),4)
+            sqEul  =  sqminEuler(D,SymTensor,"ZYZ");
+            Alpha = sqEul(1);
+            Beta = sqEul(2);
+            Gamma = sqEul(3);
         else
             Gamma = 0;
         end
@@ -214,7 +185,7 @@ end
 
 
 %%%%
-if Mode == 3
+if Mode == "AZXZ" % Active ZXZ
     
     Beta1 = acos(U(3,3));
     
@@ -229,7 +200,7 @@ if Mode == 3
     Alpha = Alpha1;
     Beta = Beta1;
     Gamma = Gamma1;
-    M=RotateTensor(Alpha,Beta,Gamma,PAS,2);
+    M=RotateTensor(Alpha,Beta,Gamma,PAS,"AZXZ");
     MF=U*PAS*U^(-1);
     
     if isequal(round(M,3),round(MF,3)) % This check is to solve the cases when "eig" produces negative eigen vectors. If the eigen vectors have the wrong signa, the euler angles are incorrectly calculated
@@ -279,7 +250,10 @@ if Mode == 3
     
     if Sym1 == 1
         if round(D(3),4) == round(D(2),4)
-            
+            sqEul  =  sqminEuler(D,SymTensor,"ZXZ");
+            Alpha = sqEul(1);
+            Beta = sqEul(2);
+            Gamma = sqEul(3);
             
         else
             Gamma = 0;
@@ -292,7 +266,7 @@ if Mode == 3
     
     Euler = [AlphaZXZactive,BetaZXZactive,GammaZXZactive];
 end
-if Mode == 4
+if Mode == "PZXZ" % Passive ZYZ
     Beta1 = acos(U(3,3));
     
     if U(3,3) == 1
@@ -306,7 +280,7 @@ if Mode == 4
     Alpha = Alpha1;
     Beta = Beta1;
     Gamma = Gamma1;
-    M=RotateTensor(Alpha,Beta,Gamma,PAS,2);
+    M=RotateTensor(Alpha,Beta,Gamma,PAS,"AZXZ");
     MF=U*PAS*U^(-1);
     
     if isequal(round(M,3),round(MF,3)) % This check is to solve the cases when "eig" produces negative eigen vectors. If the eigen vectors have the wrong signa, the euler angles are incorrectly calculated
@@ -324,6 +298,23 @@ if Mode == 4
         Alpha = Alpha1;
         Beta = Beta1;
         Gamma = Gamma1;
+    end
+    
+    if Sym1 == 2 % setting angles for spherically symmetric tensors
+        Alpha = 0;
+        Beta = 0;
+        Gamma = 0;
+    end
+    if Sym1 == 1
+        if round(D(3),4) == round(D(2),4)
+            sqEul  =  sqminEuler(D,SymTensor,"ZXZ");
+            Alpha = sqEul(1);
+            Beta = sqEul(2);
+            Gamma = sqEul(3);
+            
+        else
+            Alpha = 0;
+        end
     end
     
     AlphaZXZpassive = mod(-Gamma,2*pi);
@@ -347,19 +338,7 @@ if Mode == 4
         AlphaZXZpassive = AlphaZXZpassive-pi;
     end
     
-    if Sym1 == 2 % setting angles for spherically symmetric tensors
-        AlphaZXZpassive = 0;
-        BetaZXZpassive = 0;
-        GammaZXZpassive = 0;
-    end
-    if Sym1 == 1
-        if round(D(3),4) == round(D(2),4)
-            
-            
-        else
-            AlphaZXZpassive = 0;
-        end
-    end
+
     
     Euler = [AlphaZXZpassive,BetaZXZpassive,GammaZXZpassive];
 end

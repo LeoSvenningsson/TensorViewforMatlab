@@ -1,7 +1,7 @@
 function MF = RotateTensor(Alpha,Beta,Gamma,PAS,System)
 
 
-if System == 0 || System == 1 % 0 = ZYZactive; 1 = ZYZpassive; 2 = ZXZactive; 3 = ZXZpassive
+if System == "AZYZ" || System == "PZYZ" 
     rz1 =   [cos(Alpha), -sin(Alpha), 0;
         sin(Alpha), cos(Alpha), 0;
         0, 0, 1];
@@ -18,11 +18,11 @@ if System == 0 || System == 1 % 0 = ZYZactive; 1 = ZYZpassive; 2 = ZXZactive; 3 
     
     
     R = rz1*ry2*rz3;
-    if System == 1
+    if System == "PZYZ"
         R = rz3^(-1)*ry2^(-1)*rz1^(-1);
     end
     
-elseif System == 2 || System == 3
+elseif System == "AZXZ" || System == "PZXZ"
     
     rz1 =   [cos(Alpha), -sin(Alpha), 0;
         sin(Alpha), cos(Alpha), 0;
@@ -38,7 +38,7 @@ elseif System == 2 || System == 3
     
     R = rz1*rx2*rz3;
     
-    if System == 3
+    if System == "PZXZ"
         R = rz3^(-1)*rx2^(-1)*rz1^(-1);
     end
     
