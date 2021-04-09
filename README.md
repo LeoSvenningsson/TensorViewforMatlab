@@ -24,6 +24,11 @@ Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for the script version using matlab, which is why it is included separately. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
 
+### Known issues
+Semi-complete conections list does not produce correct connections. Will be fixed in the next update. For no, either complete the connections list manually or remove to use the min bond lenth criteria. 
+
+Unusual atom naming conventions in .pdb files are sometimes produces from some at least one software. This can also be changed manualy in the .pdb file. Possible fix in the next update.
+
 ### Changelog 1.12
 
 Tensoview now simplifies symmetric tensors in the Unique-x PAS form. Example: [1 2 2]. 
