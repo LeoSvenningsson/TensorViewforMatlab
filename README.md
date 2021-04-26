@@ -12,7 +12,7 @@ mathworks.com/matlabcentral/fileexchange/55231-molecoule3d
 
 onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
-   Version: 1.12
+   Version: 1.13
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@chalmers.se), 
