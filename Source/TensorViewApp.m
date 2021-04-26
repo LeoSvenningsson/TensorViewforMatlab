@@ -1,27 +1,27 @@
 function TensorViewApp(Fname,s11,s21,s31,s12,s22,s32,s13,s23,s33,x,y,z,CSARef,Scale,Trans,R,G,B,shieldShift,OvEl,MolTen,Bond,MoreT)
 %
-%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a 
-%   molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files 
-%   for molecular visualization. Any 3D tensor can be used for visualisation though 
+%   TensorView for Matlab is a tool to visualize chemical shift/shielding tensors in a
+%   molecular context. TensorView for Matlab can read arbitrary .pdb and .xyz files
+%   for molecular visualization. Any 3D tensor can be used for visualisation though
 %   the chemical shift/shielding tensor is used as an input in script.
 %
-%   TensorView for Matlab is licenced with creative commons CC BY. 
-%   https://creativecommons.org/licenses/ Free to share and adapt. 
-%   Give appropriate credits to authors: 
+%   TensorView for Matlab is licenced with creative commons CC BY.
+%   https://creativecommons.org/licenses/ Free to share and adapt.
+%   Give appropriate credits to authors:
 %   github.com/LeoSvenningsson/TensorViewforMatlab
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
 %   Version: 1.12
 %
-%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se) 
+%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
 %            Prof. Leonard Mueller (leonard.mueller@ucr.edu)
-%   
+%
 %   TensorView for Matlab is a collaboration with works derrived from
-%   molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d) 
+%   molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d)
 %   and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793  and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
-% 
+%
 %%% User input starts here
 FileName = Fname; % the molecular file in either .pdb or .xyz format
 
@@ -35,7 +35,7 @@ CSAref = CSARef; % reference shift to go from "chemical shielding" to "chemical 
 
 
 ShieldingShift = shieldShift; % 0 for Shielding;  1 for Shift % The app is always in shielding mode
-OvaloidEllipsoid = OvEl; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor % 
+OvaloidEllipsoid = OvEl; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor %
 
 TensorScale = Scale; % Tensor scaling
 
@@ -62,20 +62,20 @@ if fileid ~= -1
         while ischar(line)
             if(strncmp('HETATM',line,6) || strncmp('ATOM',line,4))
                 xyz(i,:) =  sscanf(line(31:54),'%f %f %f')';
-                Alist(i,:) =  sscanf(line(14:16),'%s');
+                labels(i) = {sscanf(line(76:78),'%s')};
                 i=i+1;
             end
             if(strncmp('CONECT',line,6))
-                Conlist(j,1:length(sscanf(line(10:end),'%f')')) =  sscanf(line(10:end),'%f')';
+                while j ~= sscanf(line(9:11),'%f')
+                    Conlist(j,1:5) = [j,0,0,0,0];
+                    j = j+1;
+                end
+                Conlist(j,1:length(sscanf(line(9:end),'%f')')) =  sscanf(line(9:end),'%f')';
                 j = j+1;
             end
             line = fgetl(fileid);
         end
         fclose(fileid);
-        labels = cell(length(Alist(:,1)),1);
-        for q = 1:length(Alist(:,1))
-        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
-        end
         filetype = ".pdb";
     elseif contains(FileName,".xyz") % reads .xyz files
         NrOfAtoms=str2double(line);
@@ -83,13 +83,9 @@ if fileid ~= -1
         for i = 1:NrOfAtoms
             line = fgetl(fileid);
             xyz(i,:) =  sscanf(line(10:48),'%f %f %f')';
-            Alist(i,:) =  sscanf(line(1:3),'%c');
+            labels(i) = {sscanf(line(1:3),'%s')};
         end
         fclose(fileid);
-        labels = cell(length(Alist(:,1)),1);
-        for q = 1:length(Alist(:,1))
-        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
-        end
         filetype = ".xyz";
         Conlist = 0;
     else
@@ -142,8 +138,8 @@ elseif PlotTensor==2
     axis equal
     set(gca,'visible','off')
     if MoreT == false
-    light('Position',[2 2 4]);
-    light('Position',[-2 -2 -4]);
+        light('Position',[2 2 4]);
+        light('Position',[-2 -2 -4]);
     end
     %cameratoolbar
     camtarget('auto')

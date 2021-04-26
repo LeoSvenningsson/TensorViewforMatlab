@@ -39,7 +39,7 @@ CSAref = 0; % reference shift to go from "chemical shielding" to "chemical shift
 
 
 ShieldingShift = 0; % 0 for Shielding;  1 for Shift
-OvaloidEllipsoid = "ovaloid"; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor % 
+OvaloidEllipsoid = "ovaloid"; % "ovaloid" for ovaloid;  "ellipsoid" for elipsoid tensor %
 
 
 TensorScale = 1; % Tensor scaling
@@ -85,20 +85,20 @@ if contains(FileName,".pdb") % reads .pdb files
     while ischar(line)
         if(strncmp('HETATM',line,6) || strncmp('ATOM',line,4))
             xyz(i,:) =  sscanf(line(31:54),'%f %f %f')';
-            Alist(i,:) =  sscanf(line(14),'%s');
+            labels(i) = {sscanf(line(76:78),'%s')};
             i=i+1;
         end
         if(strncmp('CONECT',line,6))
-            Conlist(j,1:length(sscanf(line(10:end),'%f')')) =  sscanf(line(10:end),'%f')';
+            while j ~= sscanf(line(9:11),'%f')
+                Conlist(j,1:5) = [j,0,0,0,0];
+                j = j+1;
+            end
+            Conlist(j,1:length(sscanf(line(9:end),'%f')')) =  sscanf(line(9:end),'%f')';
             j = j+1;
         end
         line = fgetl(fileid);
     end
     fclose(fileid);
-    labels = cell(length(Alist(:,1)),1);
-    for q = 1:length(Alist(:,1))
-        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
-    end
     filetype = ".pdb";
 elseif contains(FileName,".xyz") % reads .xyz files
     NrOfAtoms=str2double(line);
@@ -106,13 +106,9 @@ elseif contains(FileName,".xyz") % reads .xyz files
     for i = 1:NrOfAtoms
         line = fgetl(fileid);
         xyz(i,:) =  sscanf(line(10:48),'%f %f %f')';
-        Alist(i,:) =  sscanf(line(1:3),'%s');
+        labels(i) = {sscanf(line(1:3),'%s')};
     end
     fclose(fileid);
-    labels = cell(length(Alist(:,1)),1);
-    for q = 1:length(Alist(:,1))
-        labels(q)={strtrim(Alist(q,:))}; % remove whitespace and convert to cell
-    end
     filetype = ".xyz";
     Conlist = 0;
 else
