@@ -14,7 +14,7 @@ function TensorViewApp(Fname,s11,s21,s31,s12,s22,s32,s13,s23,s33,x,y,z,CSARef,Sc
 %
 %   Version: 1.14
 %
-%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
+%   Authors: Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
 %            Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 %
