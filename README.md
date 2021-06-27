@@ -12,10 +12,10 @@ mathworks.com/matlabcentral/fileexchange/55231-molecoule3d
 
 onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
-   Version: 1.13
+   Version: 1.14
 
 Authors: 
-Dr. Leo Svenningsson (leo.svenningsson@chalmers.se), 
+Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se), 
 Dr. André Ludwig (aludwig@alumni.ethz.ch),
 Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
@@ -26,6 +26,9 @@ Versions for windows and mac reside in their respective folder which only requir
 
 ### Known issues
 Nothing new here.
+
+### Changelog 1.14
+Tensorview now suppost .wrl export of the 3d model. Infact the "Exportsurfwrl.m" script will export any surface figure. Try fig = figure; surf(X,Y,Z) for a surface deffined by X, Y and Z.  Exportsurfwrl(fig,filename,path). The .wrl format is best used in combination with "Blender" https://www.blender.org/. The .wrl format supports primitives, however this is not yet implemented, which means that the 3d files are larger than its most compressed form... for now.
 
 ### Changelog 1.13
 Semicomplete conections lists can now be used.
