@@ -24,6 +24,15 @@ Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for the script version using matlab, which is why it is included separately. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
 
+With the inclusion of .wrl support i will include a short tutorial with its use in blender. 
+1: press file and import and choose the .wrl format.
+2: Blender has a few defoult workspaces, select the Layout workspace from the top tab if not already selected.
+3: select all objects either in the viewer or from the sidepanel.
+4: click one aditional time on one of the objects. in the bottom right, select the materials properies tab. Click on base color and select vertex colors. Now the color has been added to the selected object. 
+5: Click control+l and choose materials. This will link the materials between all of the selected objects.
+6: press on the globes in the viewport top right corner to see the materials and shading in the viewport.
+7: in the top left corner, select object and choose "shade smooth" to make it look pretty. 
+
 ### Known issues
 Nothing new here.
 
