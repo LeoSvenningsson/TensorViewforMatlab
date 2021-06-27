@@ -13,7 +13,7 @@
 %
 %   Version: 1.14
 %
-%   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
+%   Authors: Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
 %            Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 %
