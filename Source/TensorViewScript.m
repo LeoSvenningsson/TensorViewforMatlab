@@ -46,7 +46,7 @@ TensorScale = 1; % Tensor scaling
 
 Color = [1,0.5,0]; % color of the CSA tensor
 
-PlotTensor = 2; % 0 Plots the tensor with the molecule; 1 plots only the molecule; 2 only the tensor
+PlotTensor = 0; % 0 Plots the tensor with the molecule; 1 plots only the molecule; 2 only the tensor
 
 styles = 'ballstick'; % 'ballstick','licorice','large','superlarge'
 
