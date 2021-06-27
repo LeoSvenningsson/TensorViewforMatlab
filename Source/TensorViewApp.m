@@ -12,7 +12,7 @@ function TensorViewApp(Fname,s11,s21,s31,s12,s22,s32,s13,s23,s33,x,y,z,CSARef,Sc
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.13
+%   Version: 1.14
 %
 %   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
@@ -108,7 +108,7 @@ end
 
 
 if PlotTensor==0 % plots the tensor with the molecule
-    figure
+    fig = figure
     surface(X,Y,Z,'FaceColor',Color,'EdgeColor','none','FaceLighting','gouraud','AlphaData',AlphaMap,'AlphaDataMapping','none','FaceAlpha','interp','AmbientStrength',0.7);
     hold on
     set(gcf,'Color','w')
@@ -120,7 +120,7 @@ if PlotTensor==0 % plots the tensor with the molecule
     ax = gca;
     ax.Interactions = [rotateInteraction];
 elseif PlotTensor==1
-    figure
+    fig = figure
     set(gcf,'Color','w')
     molecule3D(xyz,labels,styles,filetype,Conlist,Bondlimit) % plots the molecule
     axis equal
@@ -131,7 +131,7 @@ elseif PlotTensor==1
     ax.Interactions = [rotateInteraction];
 elseif PlotTensor==2
     if MoreT == false
-        figure
+        fig = figure
     end
     set(gcf,'Color','w')
     surf(X,Y,Z,'FaceColor',Color,'EdgeColor','none','FaceLighting','gouraud','AlphaData',AlphaMap,'AlphaDataMapping','none','FaceAlpha','interp','AmbientStrength',0.7); % 'FaceAlpha',Transparency

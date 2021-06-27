@@ -11,7 +11,7 @@
 %   mathworks.com/matlabcentral/fileexchange/55231-molecule3d
 %   onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 %
-%   Version: 1.13
+%   Version: 1.14
 %
 %   Authors: Dr. Leo Svenningsson (leo.svenningsson@chalmers.se)
 %            Dr. André Ludwig (aludwig@alumni.ethz.ch)
@@ -46,7 +46,7 @@ TensorScale = 1; % Tensor scaling
 
 Color = [1,0.5,0]; % color of the CSA tensor
 
-PlotTensor = 0; % 0 Plots the tensor with the molecule; 1 plots only the molecule; 2 only the tensor
+PlotTensor = 2; % 0 Plots the tensor with the molecule; 1 plots only the molecule; 2 only the tensor
 
 styles = 'ballstick'; % 'ballstick','licorice','large','superlarge'
 
@@ -128,7 +128,7 @@ zoomFactor = min([Xbox Ybox Zbox])/max([Xbox Ybox Zbox]);
 
 
 if PlotTensor==0 % plots the tensor with the molecule
-    figure
+    fig = figure
     surface(X,Y,Z,'FaceColor',Color,'EdgeColor','none','FaceLighting','gouraud','AlphaData',AlphaMap,'AlphaDataMapping','none','FaceAlpha','interp','AmbientStrength',0.7);
     hold on
     if NR ~= 0
@@ -146,14 +146,14 @@ if PlotTensor==0 % plots the tensor with the molecule
     cameratoolbar % Use the camera control, not the "zoom options/magnifying glass"
     %camzoom(zoomFactor)
 elseif PlotTensor==1
-    figure
+    fig = figure
     set(gcf,'Color','w')
     molecule3D(xyz,labels,styles,filetype,Conlist,Bondlimit) % plots the molecule
     axis equal
     cameratoolbar % Use the camera control, not the "zoom options/magnifying glass"
     %camzoom(zoomFactor)
 elseif PlotTensor==2
-    figure
+    fig = figure
     set(gcf,'Color','w')
     surf(X,Y,Z,'FaceColor',Color,'EdgeColor','none','FaceLighting','gouraud','AlphaData',AlphaMap,'AlphaDataMapping','none','FaceAlpha','interp','AmbientStrength',0.7); % 'FaceAlpha',Transparency
     axis equal
