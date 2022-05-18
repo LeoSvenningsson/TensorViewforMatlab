@@ -33,6 +33,9 @@ With the inclusion of .wrl support, a short tutorial for Blender is included bel
 6: press on the globes in the viewport top right corner to see the materials and shading in the viewport.<br/>
 7: in the top left corner, select object and choose "shade smooth" to make it look pretty. <br/>
 
+### Wanted list
+Function to save 3d models in a binary format like ".glb". The current ".wrl" format is larger than nessesary.
+
 ### Known issues
 Nothing new here.
 
