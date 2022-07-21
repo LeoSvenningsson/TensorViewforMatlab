@@ -24,7 +24,7 @@ Prof. Leonard Mueller (leonard.mueller@ucr.edu)
    TensorView for Matlab is a collaboration with works derrived from molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d) and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793 and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
 
 
-Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for the script version using matlab, which is why it is included separately. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
+Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for opening the GUI through matlab. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
 
 With the inclusion of .wrl support, a short tutorial for Blender is included below. 
 1: press file and import and choose the .wrl format.<br/>
