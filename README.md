@@ -14,14 +14,19 @@ mathworks.com/matlabcentral/fileexchange/55231-molecoule3d
 
 onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
-   Version: 1.14
+https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb
+
+Version: 1.14
 
 Authors: 
-Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se), 
-Dr. André Ludwig (aludwig@alumni.ethz.ch),
+Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se) 
 Prof. Leonard Mueller (leonard.mueller@ucr.edu)
+Contributors:
+Dr. André Ludwig (aludwig@alumni.ethz.ch)
+Dmitri Sastin
 
-   TensorView for Matlab is a collaboration with works derrived from molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d) and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793 and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
+------ 
+   TensorView for Matlab is a collaboration with works derrived from molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d), matlab2glb ( Dmitri Sastin: https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb), and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793 and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
 
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for opening the GUI through matlab. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
