@@ -1,5 +1,5 @@
 # TensorView for Matlab
-(Expect a major update soon, contact me if you are interested to try the prerelease version)
+Uploading
 
 TensorView for Matlab is a GUI and script based tool to visualize tensors in a molecular context. TensorView for Matlab includes: Reading arbitrary .pdb and .xyz files for molecular visualization. Ovaloid and ellipsoid tensor visualisation. 3D model file conversion to .glb and .wrl. Euler angle and relative angle decoder. 
    
