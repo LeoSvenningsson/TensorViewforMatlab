@@ -15,7 +15,7 @@ onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
 https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb
 
-Version: 1.15
+Version: 1.15 (August 16th 2022)
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se) 
