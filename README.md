@@ -30,6 +30,8 @@ Dmitri Sastin (https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab
 
 Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for opening the GUI through matlab. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
 
+In matlab, set your working folder to the "source" folder and klick on TensorView.mlapp (in the same folder) to start the app.
+
 .glb files are easely opened with the free Blender software or (windows) 3D paint.
 With the inclusion of .wrl support, a short tutorial for Blender is included below. 
 1: press file and import and choose the .wrl format.<br/>
