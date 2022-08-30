@@ -573,12 +573,9 @@ end
 RfinalCheck = CreateRotationMatrix(Euler(1),Euler(2),Euler(3),Mode);
 UfinalCheck = round(U*PAS*U^-1,14);
 MfinalCheck = round(RfinalCheck*PAS*RfinalCheck^-1,14);
-if Sym1 == 1 || Sym2 == 1
+if isequal(round(UfinalCheck,3),round(MfinalCheck,3))
 else
-    if isequal(round(UfinalCheck,3),round(MfinalCheck,3))
-    else
-        disp('Failed isequal check, please contact the authors for bughunting')
-    end
+    disp('Failed isequal check, please contact the authors for bughunting')
 end
 
 end
