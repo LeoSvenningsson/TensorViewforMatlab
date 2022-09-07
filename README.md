@@ -1,6 +1,6 @@
 # TensorView for Matlab
 
-TensorView for Matlab is a GUI and script based tool to visualize tensors in a molecular context. TensorView for Matlab includes: Reading arbitrary .pdb and .xyz files for molecular visualization. Ovaloid and ellipsoid tensor visualisation. 3D model file conversion to .glb and .wrl. Euler angle and relative angle decoder. 
+TensorView for Matlab is a GUI and script based tool to visualize tensors in a molecular context. TensorView for Matlab includes: Reading arbitrary .pdb and .xyz files for molecular visualization. Ovaloid and ellipsoid tensor visualisation. 3D model file conversion to .glb and .wrl. Euler angle and relative angle decoder. All angles are cross-validated with the input tensor.
    
    TensorView for Matlab is licenced with creative commons CC BY. https://creativecommons.org/licenses/
 Free to share and adapt. Give appropriate credits to authors:
@@ -15,7 +15,7 @@ onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
 https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb
 
-Version: 1.15 (August 16th 2022)
+Version: 1.15 (September 7th 2022)
 
 Authors: 
 Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se) 
@@ -49,7 +49,8 @@ With the inclusion of .wrl support, a short tutorial for Blender is included bel
 Nothing new here.
 
 ### Changelog 1.15 (Major update)
-New features: Export 3D models as .glb format. Module for relative angles of two tensors. Module for reference frame plotting. Feature to load and save lists of tensors as text files (.dat). Feature to load lists of reference frames. Feature to save lists of relative angles from two tensors. Removed all iterative calculations of euler angles for all analytical solutions though the function for sqmineuler still remains in the function folder if someone wants to use it in their own scripts. The app also now includes an extra validation step that will give notification in the matlab command promt if for any reason the obtained MFtoEuler or relative euler angles should not rectreat the correct rotation matrix/tensor. 
+New features: Export 3D models as .glb format. Module for relative angles of two tensors. Module for reference frame plotting. Feature to load and save lists of tensors as text files (.dat). Feature to load lists of reference frames. Feature to save lists of relative angles from two tensors. Removed all iterative calculations of euler angles for all analytical solutions though the function for sqmineuler still remains in the function folder if someone wants to use it in their own scripts. The app also now includes an extra validation step that will give notification in the matlab command promt if for any reason the obtained MFtoEuler or relative euler angles should not rectreat the correct rotation matrix/tensor. The new cross validation feature is an insurance that the angles are calculated correctly and will give a notification in the command window if the  cross validation could not exactly reproduce the input tensor.
+
 
 ### Changelog 1.14
 Tensorview for Matlab now supports .wrl export of the 3d model. The "Exportsurfwrl.m" script will export any surface figure. Try fig = figure; surf(X,Y,Z) for a surface defined by X, Y and Z.  Exportsurfwrl(fig,filename,path). The .wrl format is best used in combination with "Blender" https://www.blender.org/. The .wrl format supports primitives, however this is not yet implemented, which means that the 3d files are larger than its most compressed form... for now.
