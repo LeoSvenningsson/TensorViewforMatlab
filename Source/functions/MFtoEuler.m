@@ -133,10 +133,6 @@ if Mode == "AZYZ"
             Gamma = 0;
         end
     end
-    if isequal(round(M,3),round(SymTensor,3))
-    else
-        disp('Failed isequal check, please contact the authors for bughunting')
-    end
     Alpha = mod(Alpha,2*pi);
     Beta = mod(Beta,2*pi);
     Gamma = mod(Gamma,2*pi);
@@ -273,7 +269,7 @@ if Mode == "PZYZ"
             Gamma = 0;
         end
     end
-    
+
     AlphaZYZpassive = mod(-Gamma,2*pi);
     BetaZYZpassive = mod(-Beta,2*pi);
     GammaZYZpassive = mod(-Alpha,2*pi);
@@ -401,7 +397,6 @@ if Mode == "AZXZ" % Active ZXZ
             Gamma = 0;
         end
     end
-    %isequal(round(M,3),round(SymTensor,3))
     
     Alpha = mod(Alpha,2*pi);
     Beta = mod(Beta,2*pi);
@@ -563,9 +558,7 @@ if Mode == "PZXZ" % Passive ZYZ
     if AlphaZXZpassive>=pi
         AlphaZXZpassive = AlphaZXZpassive-pi;
     end
-    
-    
-    
+
     Euler = [AlphaZXZpassive,BetaZXZpassive,GammaZXZpassive];
 end
 
@@ -573,9 +566,10 @@ end
 RfinalCheck = CreateRotationMatrix(Euler(1),Euler(2),Euler(3),Mode);
 UfinalCheck = round(U*PAS*U^-1,14);
 MfinalCheck = round(RfinalCheck*PAS*RfinalCheck^-1,14);
+
 if isequal(round(UfinalCheck,3),round(MfinalCheck,3))
 else
-    disp('Failed isequal check, please contact the authors for bughunting')
+    disp('Failed isequal check at MFtoEuler, please contact the authors for bughunting')
 end
 
 end

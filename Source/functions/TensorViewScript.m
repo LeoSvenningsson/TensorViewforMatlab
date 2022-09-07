@@ -90,7 +90,7 @@ NR = 0; % Number of extra tensors
 fileid = fopen(FileName,'r');
 line = fgetl(fileid);
 
-if contains(FileName,".pdb") % reads .pdb files
+if contains(FileName,".pdb") || contains(FileName,".PDB") % reads .pdb files
     i=1;
     j=1;
     Conlist = 0;
@@ -112,7 +112,7 @@ if contains(FileName,".pdb") % reads .pdb files
     end
     fclose(fileid);
     filetype = ".pdb";
-elseif contains(FileName,".xyz") % reads .xyz files
+elseif contains(FileName,".xyz") || contains(FileName,".XYZ") % reads .xyz files
     NrOfAtoms=str2double(line);
     line = fgetl(fileid); % Skip a line
     for i = 1:NrOfAtoms

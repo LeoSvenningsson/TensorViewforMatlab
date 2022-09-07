@@ -97,7 +97,7 @@ end
 % end check negative eigen
 
 
-U=U2^(-1)*U; %Sets the relative rotation matrix
+U=U2^(-1)*U; %Sets the relative rotation matrix. Maybe an unfortunate namning consider changing
 
 PAS(1,1)=D(1);
 PAS(2,2)=D(2);
@@ -148,7 +148,8 @@ if Mode == "AZYZ"
         Rrel2 = R1^(-1)*R2; % not used
         
         PASv1 = round(PASv1,14);% removes floating point jittering for sensitive sqrt calculations
-        %PASv2 = round(PASv2,14); % not used
+        PASv2 = round(PASv2,14);
+        
         Arel1=round(Rrel1*PAS1*Rrel1^-1,14);
         Arel2=round(Rrel2*PAS2*Rrel2^-1,14); % not used
         
@@ -160,11 +161,11 @@ if Mode == "AZYZ"
                 Alpha = 0; Beta = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
                 RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZYZ");
                 Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
-                GammaCheck = asin(Arel1(3,2)/Mcheck(3,1));
-                GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZYZ"); % the rotaion here finds the solution on tensor A symmetry axis on a tensor B in the frame of A system. 
+                GammaCheck = asin(Arel1(3,2)/Mcheck(3,1)); % A trick since Mcheck(3,2) == 0 in this case
+                GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZYZ"); % the rotaion here finds the solution on tensor A symmetry axis on a tensor B in the frame of A system.
                 Mcheck=round(GammarotCheck*Mcheck*GammarotCheck^-1,3);
                 
-                %isequal(round(Arel1,3),round(Mcheck,3));
+                
                 if isequal(round(Arel1,3),round(Mcheck,3))
                 else
                     Alpha = 0; Beta = asin(-sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
@@ -178,20 +179,26 @@ if Mode == "AZYZ"
                         disp('Failed isequal check, please contact the authors for bughunting')
                     end
                 end
-                %[Euler,PASv] = MFtoEuler(Arel1,"AZYZ",Order1);
-                %Euler
-                %Beta
             end
         elseif Sym1 == 1 && Sym2 == 0
-            [Eulerrel1, PASv1] = MFtoEuler(Arel1,"AZYZ",Order1);
+            [Eulerrel1, ~] = MFtoEuler(Arel1,"AZYZ",Order1);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            
+            RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZYZ");
+            Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
+            
+            if isequal(round(Arel1,3),round(Mcheck,3))
+            else
+                disp('Failed isequal check, please contact the authors for bughunting')
+            end
         elseif Sym1 == 0 && Sym2 == 1
-            [Eulerrel1, PASv2] = MFtoEuler(Arel2,"PZYZ",Order2);
+            [Eulerrel1,~] = MFtoEuler(Arel2,"PZYZ",Order2);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            [Alpha,Beta,Gamma] = tryallanglestest(Alpha,Beta,Gamma,PASv2,PAS1,Arel1,Mode);
         end
         
     end
@@ -275,8 +282,8 @@ if Mode == "PZYZ"
         Rrel1 = R2^(-1)*R1;
         Rrel2 = R1^(-1)*R2;
         
-        PASv1 = round(PASv1,14);% removes floating point jittering for sensitive sqrt calculations
-        PASv2 = round(PASv2,14);
+        PASv1 = round(PASv1,12);% removes floating point jittering for sensitive sqrt calculations
+        PASv2 = round(PASv2,12);
         Arel1=round(Rrel1*PAS1*Rrel1^-1,14);
         Arel2=round(Rrel2*PAS2*Rrel2^-1,14);
         
@@ -286,10 +293,10 @@ if Mode == "PZYZ"
             else
                 Alpha = 0; Beta = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
                 RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZYZ");
-                Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14)
-                GammaCheck = asin(Arel1(3,2)/Mcheck(3,1))
-                GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZYZ")
-                Mcheck=round(GammarotCheck*Mcheck*GammarotCheck^-1,3)
+                Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
+                GammaCheck = asin(Arel1(3,2)/Mcheck(3,1));
+                GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZYZ");
+                Mcheck=round(GammarotCheck*Mcheck*GammarotCheck^-1,3);
                 
                 %isequal(round(Arel1,3),round(Mcheck,3));
                 if isequal(round(Arel1,3),round(Mcheck,3))
@@ -307,15 +314,24 @@ if Mode == "PZYZ"
                 end
             end
         elseif Sym1 == 1 && Sym2 == 0
-            [Eulerrel1, PASv1] = MFtoEuler(Arel1,"AZYZ",Order1);
+            [Eulerrel1, ~] = MFtoEuler(Arel1,"AZYZ",Order1);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            
+            RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZYZ");
+            Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
+            
+            if isequal(round(Arel1,3),round(Mcheck,3))
+            else
+                disp('Failed isequal check, please contact the authors for bughunting')
+            end
         elseif Sym1 == 0 && Sym2 == 1
-            [Eulerrel1, PASv2] = MFtoEuler(Arel2,"PZYZ",Order2);
+            [Eulerrel1,~] = MFtoEuler(Arel2,"PZYZ",Order2);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            [Alpha,Beta,Gamma] = tryallanglestest(Alpha,Beta,Gamma,PASv2,PAS1,Arel1,Mode);
         end
         
     end
@@ -397,8 +413,8 @@ if Mode == "AZXZ" % Active ZXZ
         R2 = CreateRotationMatrix(Euler2(1),Euler2(2),Euler2(3),"AZXZ");
         Rrel1 = R2^(-1)*R1;
         Rrel2 = R1^(-1)*R2;
-        PASv1 = round(PASv1,14);% removes floating point jittering for sensitive sqrt calculations
-        PASv2 = round(PASv2,14);
+        PASv1 = round(PASv1,12);% removes floating point jittering for sensitive sqrt calculations
+        PASv2 = round(PASv2,12);
         Arel1=round(Rrel1*PAS1*Rrel1^-1,14);
         Arel2=round(Rrel2*PAS2*Rrel2^-1,14);
         
@@ -407,39 +423,28 @@ if Mode == "AZXZ" % Active ZXZ
             if sum(round(Arel1(2,3),9)+round(Arel1(1,3),9)+round(Arel1(1,2),9)) == 0 %% handles the case when the relative angle is exactly [0,0,0]
                 Alpha = 0; Beta = 0; Gamma = 0;
             else
-                if PASv1(1) == PASv1(2) && PASv2(1) == PASv2(2)
+                if  PASv1(1) == PASv1(2)
                     Alpha = pi/2; Beta = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
-                elseif PASv1(3) == PASv1(2) && PASv2(3) == PASv2(2)
-                    Alpha = 0; Beta = pi/2; Gamma = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3))));
-                elseif PASv1(1) == PASv1(2) && PASv2(3) == PASv2(2)
-                    Alpha = pi/2; Beta = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
-                elseif PASv1(3) == PASv1(2) && PASv2(1) == PASv2(2)
+                elseif PASv1(3) == PASv1(2)
                     Alpha = 0; Beta = pi/2; Gamma = asin(sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3))));
                 end
-                
                 RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZXZ");
-                Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
-                GammaCheck = asin(Arel1(3,2)/Mcheck(3,1));
-                GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZXZ");
-                Mcheck=round(GammarotCheck*Mcheck*GammarotCheck^-1,3) ;
-                
-                %isequal(round(Arel1,3),round(Mcheck,3));
+                Mcheck = RrelCheck*PAS1*RrelCheck^-1;
+                angCheck = asin(Arel1(3,2)/Mcheck(3,1));
+                angrotCheck = CreateRotationMatrix(0,0,angCheck,"AZXZ");
+                Mcheck=angrotCheck*Mcheck*angrotCheck^-1;
                 if isequal(round(Arel1,3),round(Mcheck,3))
                 else
-                    if PASv1(1) == PASv1(2) && PASv2(1) == PASv2(2)
+                    if PASv1(1) == PASv1(2)
                         Alpha = pi/2; Beta = asin(-sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
-                    elseif PASv1(3) == PASv1(2) && PASv2(3) == PASv2(2)
-                        Alpha = 0; Beta = pi/2; Gamma = asin(-sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3))));
-                    elseif PASv1(1) == PASv1(2) && PASv2(3) == PASv2(2)
-                        Alpha = pi/2; Beta = asin(-sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3)))); Gamma = 0;
-                    elseif PASv1(3) == PASv1(2) && PASv2(1) == PASv2(2)
+                    elseif PASv1(3) == PASv1(2)
                         Alpha = 0; Beta = pi/2; Gamma = asin(-sqrt((Arel1(3,3)-PASv1(3))/(PASv1(1)-PASv1(3))));
                     end
                     RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZXZ");
-                    Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
-                    GammaCheck = asin(Arel1(3,2)/Mcheck(3,1));
-                    GammarotCheck = CreateRotationMatrix(0,0,GammaCheck,"AZXZ");
-                    Mcheck=round(GammarotCheck*Mcheck*GammarotCheck^-1,3);
+                    Mcheck = RrelCheck*PAS1*RrelCheck^-1;
+                    angCheck = asin(Arel1(3,2)/Mcheck(3,1));
+                    angrotCheck = CreateRotationMatrix(0,0,angCheck,"AZXZ");
+                    Mcheck=angrotCheck*Mcheck*angrotCheck^-1;
                     if isequal(round(Arel1,3),round(Mcheck,3))
                     else
                         disp('Failed isequal check, please contact the authors for bughunting')
@@ -447,18 +452,24 @@ if Mode == "AZXZ" % Active ZXZ
                 end
             end
         elseif Sym1 == 1 && Sym2 == 0
-            [Eulerrel1, PASv1] = MFtoEuler(Arel1,"AZXZ",Order1);
+            [Eulerrel1, ~] = MFtoEuler(Arel1,"AZXZ",Order1);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            
+            RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZXZ");
+            Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
+            if isequal(round(Arel1,3),round(Mcheck,3))
+            else
+                disp('Failed isequal check at AZXZ, please contact the authors for bughunting')
+            end
         elseif Sym1 == 0 && Sym2 == 1
-            [Eulerrel1, PASv2] = MFtoEuler(Arel2,"PZXZ",Order2);
+            [Eulerrel1, ~] = MFtoEuler(Arel2,"PZXZ",Order2);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            [Alpha,Beta,Gamma] = tryallanglestest(Alpha,Beta,Gamma,PASv2,PAS1,Arel1,Mode);
         end
-        %RotateTensor(Alpha,Beta,Gamma,PAS1,"AZXZ")
-        %Arel1
     end
     
     Alpha = mod(Alpha,2*pi);
@@ -537,8 +548,8 @@ if Mode == "PZXZ" % Passive ZYZ
         Rrel1 = R2^(-1)*R1;
         Rrel2 = R1^(-1)*R2;
         
-        PASv1 = round(PASv1,14);% removes floating point jittering for sensitive sqrt calculations
-        PASv2 = round(PASv2,14);
+        PASv1 = round(PASv1,12);% removes floating point jittering for sensitive sqrt calculations
+        PASv2 = round(PASv2,12);
         Arel1=round(Rrel1*PAS1*Rrel1^-1,14);
         Arel2=round(Rrel2*PAS2*Rrel2^-1,14);
         
@@ -586,15 +597,23 @@ if Mode == "PZXZ" % Passive ZYZ
                 end
             end
         elseif Sym1 == 1 && Sym2 == 0
-            [Eulerrel1, PASv1] = MFtoEuler(Arel1,"AZXZ",Order1);
+            [Eulerrel1, ~] = MFtoEuler(Arel1,"AZXZ",Order1);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            
+            RrelCheck = CreateRotationMatrix(Alpha,Beta,Gamma,"AZXZ");
+            Mcheck = round(RrelCheck*PAS1*RrelCheck^-1,14);
+            if isequal(round(Arel1,3),round(Mcheck,3))
+            else
+                disp('Failed isequal check, please contact the authors for bughunting')
+            end
         elseif Sym1 == 0 && Sym2 == 1
-            [Eulerrel1, PASv2] = MFtoEuler(Arel2,"PZXZ",Order2);
+            [Eulerrel1, ~] = MFtoEuler(Arel2,"PZXZ",Order2);
             Alpha = Eulerrel1(1);
             Beta = Eulerrel1(2);
             Gamma = Eulerrel1(3);
+            [Alpha,Beta,Gamma] = tryallanglestest(Alpha,Beta,Gamma,PASv2,PAS1,Arel1,Mode);
         end
         
     end
@@ -634,10 +653,12 @@ end
 RfinalCheck = CreateRotationMatrix(Euler(1),Euler(2),Euler(3),Mode);
 BAfinalCheck = round(U*PAS1*U^-1,14);
 MfinalCheck = round(RfinalCheck*PAS1*RfinalCheck^-1,14);
-if Sym1 == 1 || Sym2 == 1
-else
+if Sym1 == 0 && Sym2 == 0
+    isequal(round(BAfinalCheck,3),round(MfinalCheck,3))
+    
     if isequal(round(BAfinalCheck,3),round(MfinalCheck,3))
     else
-        disp('Failed isequal check, please contact the authors for bughunting')
+        disp('Failed isequal check at RelativeRngles, please contact the authors for bughunting')
     end
+end
 end
