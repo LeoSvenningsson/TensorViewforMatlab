@@ -5,6 +5,9 @@ TensorView for Matlab is a GUI and script based tool to visualize tensors in a m
    TensorView for Matlab is licenced with creative commons CC BY. https://creativecommons.org/licenses/
 Free to share and adapt. Give appropriate credits to authors:
 
+Please reference article:
+https://doi.org/10.1016/j.ssnmr.2022.101849
+
 Credits:
 
 github.com/LeoSvenningsson/TensorViewforMatlab
