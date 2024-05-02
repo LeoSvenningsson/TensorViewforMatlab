@@ -21,7 +21,7 @@ https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb
 Version: 1.15 (September 7th 2022)
 
 Authors: 
-Dr. Leo Svenningsson (leo.svenningsson@fkem1.lu.se) 
+Dr. Leo Svenningsson () 
 Prof. Leonard Mueller (leonard.mueller@ucr.edu)
 Contributors:
 Dr. André Ludwig (aludwig@alumni.ethz.ch, molecule3d)
