@@ -49,7 +49,9 @@ With the inclusion of .wrl support, a short tutorial for Blender is included bel
 
 
 ### Known issues
-Nothing new here.
+the windows and mac apps are only compiled to patch 1.151
+### Changelog 1.152
+A bug was found where an erronius criteria if acos(U(3,3)) == 1 was found in three places, and changed to if U(3,3) == 1. These are used for simplifications of the specific angle beta=0.
 
 ### Changelog 1.151
 Recompiled Tensorview for matlab without any changes. This somehow fixed a bug where precompiled versions would display figures.
