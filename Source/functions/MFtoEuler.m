@@ -185,7 +185,7 @@ if Mode == "PZYZ"
     else
         U=-U;
         Beta1 = acos(U(3,3));
-        if acos(U(3,3)) == 1
+        if U(3,3) == 1
             Alpha1 = acos(U(1,1));
             Gamma1 = 0;
         else
@@ -320,7 +320,7 @@ if Mode == "AZXZ" % Active ZXZ
     else
         U=-U;
         Beta1 = acos(U(3,3));
-        if acos(U(3,3)) == 1
+        if U(3,3) == 1
             Alpha1 = acos(U(1,1));
             Gamma1 = 0;
         else
@@ -456,7 +456,7 @@ if Mode == "PZXZ" % Passive ZYZ
     else
         U=-U;
         Beta1 = acos(U(3,3));
-        if acos(U(3,3)) == 1
+        if U(3,3) == 1
             Alpha1 = acos(U(1,1));
             Gamma1 = 0;
         else
