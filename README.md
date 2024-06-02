@@ -18,7 +18,7 @@ onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793
 
 https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb
 
-Version: 1.15 (September 7th 2022)
+Version: 1.152 (June 1st 2024)
 
 Authors: 
 Dr. Leo Svenningsson () 
@@ -31,7 +31,7 @@ Dmitri Sastin (https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab
    TensorView for Matlab is a collaboration with works derrived from molecule3D.m (André Ludwig: mathworks.com/matlabcentral/fileexchange/55231-molecule3d), matlab2glb ( Dmitri Sastin: https://se.mathworks.com/matlabcentral/fileexchange/109264-matlab2glb), and TensorView (Prof. Leonard Mueller: https://onlinelibrary.wiley.com/doi/full/10.1002/mrc.4793 and https://sites.google.com/ucr.edu/Mueller/home/tensorview)
 
 
-Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for opening the GUI through matlab. Matlab2020 or the free "matlab2020 runtime" or later versions are required.
+Versions for windows and mac reside in their respective folder which only requires the latest matab compiler. The Scource folder contains the matlab code, but also include a matlab script which can be run with matlab. As of now, there are more camera options for opening the GUI through matlab. Matlab2022 or the free "matlab2022 runtime" or later versions are required.
 
 In matlab, set your working folder to the "source" folder and klick on TensorView.mlapp (in the same folder) to start the app.
 
