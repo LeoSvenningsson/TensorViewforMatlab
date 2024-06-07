@@ -46,15 +46,17 @@ With the inclusion of .wrl support, a short tutorial for Blender is included bel
 7: in the top left corner, select object and choose "shade smooth" to make it look pretty. <br/>
 
 ### Wanted list
-
+Wigner rotations
 
 ### Known issues
 the windows and mac apps are only compiled to patch 1.151
+mac app is currently only compiled for apple silicon
 ### Changelog 1.152
 A bug was found where an erronius criteria if acos(U(3,3)) == 1 was found in three places, and changed to if U(3,3) == 1. These are used for simplifications of the specific angle beta=0.
+It is unlikly that these angles simplifications where ever erroniously activated in since U(3,3) would have needed to be a very specific irrational number. 
 
 ### Changelog 1.151
-Recompiled Tensorview for matlab without any changes. This somehow fixed a bug where precompiled versions would display figures.
+Recompiled Tensorview for matlab without any changes. This somehow fixed a bug where the precompiled versions would not display figures.
 
 ### Changelog 1.15 (Major update)
 New features: Export 3D models as .glb format. Module for relative angles of two tensors. Module for reference frame plotting. Feature to load and save lists of tensors as text files (.dat). Feature to load lists of reference frames. Feature to save lists of relative angles from two tensors. Removed all iterative calculations of euler angles for all analytical solutions though the function for sqmineuler still remains in the function folder if someone wants to use it in their own scripts. The app also now includes an extra validation step that will give notification in the matlab command promt if for any reason the obtained MFtoEuler or relative euler angles should not rectreat the correct rotation matrix/tensor. The new cross validation feature is an insurance that the angles are calculated correctly and will give a notification in the command window if the  cross validation could not exactly reproduce the input tensor. This is mainly to find all of the edge cases, usually from floating point jittering. 
